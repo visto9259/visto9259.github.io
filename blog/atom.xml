@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://visto9259.github.io/blog</id>
+    <title>visto9259 Blog</title>
+    <updated>2020-04-07T06:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://visto9259.github.io/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest visto9259 news and events.</subtitle>
+    <logo>https://visto9259.github.io/img/7890483.jpeg</logo>
+    <rights>Copyright © 2020 Eric Richer</rights>
+    <entry>
+        <title type="html"><![CDATA[Welcome]]></title>
+        <id>https://visto9259.github.io/blog/2020/04/07/welcome.html</id>
+        <link href="https://visto9259.github.io/blog/2020/04/07/welcome.html"/>
+        <updated>2020-04-07T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Welcome to my homepage on GitHub.</p> ]]></summary>
+        <author>
+            <name>Eric Richer</name>
+            <email/>
+            <uri>https://github.com/visto9259</uri>
+        </author>
+    </entry>
+</feed>

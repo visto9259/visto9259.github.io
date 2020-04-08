@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>laminas-console-symfony · visto9259</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="A Laminas MVC console app using Symfony Console"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="laminas-console-symfony · visto9259"/><meta property="og:type" content="website"/><meta property="og:url" content="https://visto9259.github.io/"/><meta property="og:description" content="A Laminas MVC console app using Symfony Console"/><meta property="og:image" content="https://visto9259.github.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://visto9259.github.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/7890483.jpeg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://visto9259.github.io/blog/atom.xml" title="visto9259 Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://visto9259.github.io/blog/feed.xml" title="visto9259 Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/7890483.jpeg" alt="visto9259"/><h2 class="headerTitleWithLogo">visto9259</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/php-webpack-plugin" target="_self">Docs</a></li><li class=""><a href="/docs/zend-webpack-guide" target="_self">Guides</a></li><li class=""><a href="/docs/me" target="_self">About</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Packages</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Packages</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/php-webpack-plugin">php-webpack-plugin</a></li><li class="navListItem"><a class="navItem" href="/docs/zend-webpack">zend-webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/url-search-params-react">urlsearchparams-react-native</a></li><li class="navListItem"><a class="navItem" href="/docs/zf-console-symfony">zf-console-symfony</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/laminas-console-symfony">laminas-console-symfony</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">laminas-console-symfony</h1></header><article><div><span><p>A Laminas MVC console app using Symfony Console</p>
+<h2><a class="anchor" aria-hidden="true" id="introduction"></a><a href="#introduction" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Introduction</h2>
+<p><code>laminas-console-symfony</code> provides a replacement for <code>zf-console</code> with a wrapper for the <code>symfony/console</code> component.</p>
+<p>For developers familiar with Laminas MVC application, this package is inspired by <code>laminas-mvc</code> in its usage of modules and dependency injection using the Service Manager.</p>
+<h2><a class="anchor" aria-hidden="true" id="requirements"></a><a href="#requirements" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Requirements</h2>
+<p>Please see the <a href="composer.json">composer.json</a> file.</p>
+<h2><a class="anchor" aria-hidden="true" id="installation"></a><a href="#installation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Installation</h2>
+<p>Run the following <code>composer</code> command:</p>
+<pre><code class="hljs">$ composer require visto9259/laminas-console-symfony
+</code></pre>
+<p>Or, alternatively, manually add the following to your <code>composer.json</code>, in the <code>require</code> section:</p>
+<pre><code class="hljs">&quot;require&quot; : {
+    &quot;visto9259/laminas-console-symfony&quot; : &quot;^1.0.0&quot;
+}
+</code></pre>
+<p>And then run <code>composer update</code> to ensure the module is installed.</p>
+<h2><a class="anchor" aria-hidden="true" id="creating-a-console-application"></a><a href="#creating-a-console-application" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating a console application</h2>
+<p>The console application skeleton is based on the Laminas Framework MVC Application skeleton.  It follows a similar directory structure:</p>
+<pre><code class="hljs">MyApp/
+   config/
+      autoload/
+         global.php
+         local.php
+         ... other config files
+      application.config.php
+      modules.config.php
+      commands.config.php
+      development.config.php (optional)
+   module/
+      myModule/
+        config/
+           module.config.php (optional)
+        src/
+           Module.php
+   vendor/
+      composer/
+      ...
+      autoload.php (created by Composer)
+   myapp.php (entry point of the application)
+</code></pre>
+<p>The <code>myapp.php</code> file contains the console application code and can be as simple as:</p>
+<pre><code class="hljs css language-php"><span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span>.<span class="hljs-string">'/vendor/autoload.php'</span>;
+     
+<span class="hljs-keyword">use</span> <span class="hljs-title">Laminas</span>\<span class="hljs-title">Stdlib</span>\<span class="hljs-title">ArrayUtils</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">LaminasSymfonyConsole</span>\<span class="hljs-title">Application</span>;
+     
+<span class="hljs-comment">// Setup the application</span>
+$appConfig = <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/config/application.config.php_dist'</span>;
+<span class="hljs-keyword">if</span> (file_exists(<span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/config/development.config.php'</span>)) {
+   $appConfig = ArrayUtils::merge($appConfig, <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/config/development.config.php'</span>);
+}
+$application = <span class="hljs-keyword">new</span> Application($appConfig);
+     
+$exit = $application-&gt;run();
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="configuring-the-application"></a><a href="#configuring-the-application" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Configuring the application</h3>
+<p>The file <code>application_config.php</code> provides the configuration for the console application and for the loading of the modules using the Laminas Framework Module Manager.  It contains the following:</p>
+<pre><code class="hljs css language-php"><span class="hljs-keyword">return</span> [
+    <span class="hljs-string">'console_application_options'</span> =&gt; [
+        <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'Test'</span>,
+        <span class="hljs-string">'version'</span> =&gt; <span class="hljs-string">'0.1'</span>,
+    ],
+    <span class="hljs-string">'commands'</span> =&gt; <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/commands.config.php_dist'</span>,
+    <span class="hljs-string">'modules'</span> =&gt; <span class="hljs-keyword">require</span> <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/modules.config.php'</span>,
+    <span class="hljs-string">'module_listener_options'</span> =&gt; [
+        <span class="hljs-string">'module_paths'</span> =&gt; [
+            <span class="hljs-string">'./module'</span>,
+            <span class="hljs-string">'./vendor'</span>,
+        ],
+        <span class="hljs-string">'config_glob_paths'</span> =&gt; [
+            realpath(<span class="hljs-keyword">__DIR__</span>) . <span class="hljs-string">'/autoload/{{,*.}global,{,*.}local}.php'</span>,
+        ],
+    ],
+    <span class="hljs-string">'service_manager'</span> =&gt; [
+        <span class="hljs-comment">// typical Service Manager configation</span>
+    ],   
+];
+</code></pre>
+<p><code>console_application_options</code> contains the <code>$name</code> and <code>$version</code> arguments passed to <code>Symfony\Component\Console\Application</code> constructor.</p>
+<p><code>commands</code> is an array of command configurations.  See <a href="#DefiningCommands">Defining Commands</a> for details.</p>
+<p><code>modules</code> and <code>module_listener_options</code> are the Module Manager configuration parameters.</p>
+<p><code>service_manager</code> contains the typical Laminas Framework Service Manager configuration which allows for services, factories and so on to be defined.</p>
+<h4><a class="anchor" aria-hidden="true" id="differences-with-laminas-mvc-applications"></a><a href="#differences-with-laminas-mvc-applications" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Differences with <code>laminas-mvc</code> applications</h4>
+<p>This application is inspired by the <code>laminas-mvc</code> application but it is not intended to implement a full-fledge MVC application.
+It is a wrapper around the Symfony Console Application that provides a Service Manager for dependency injection and uses the Module Manager to load modules.</p>
+<p>The intent is that if one wants to use an existing or a custom Laminas module, it can be added to the list of modules to be loaded.
+For example, if a module defines services to access a database, it will be loaded by the Module Manager and its services added to the Service Manager.</p>
+<h4><a class="anchor" aria-hidden="true" id="limitations-in-module-configuration"></a><a href="#limitations-in-module-configuration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Limitations in Module Configuration</h4>
+<p>The LaminasConsoleSymfony application uses the Module Manager <code>loadModules()</code> method to load modules but will only service modules that implement the <code>ServiceProviderInterface</code> and the <code>ConfigProviderInterface</code>interfaces.  All other provider interfaces are ignored.</p>
+<p><strong>Important:</strong> The Module class <strong>SHOULD NOT</strong> implement the <code>BootstrapListenerInterface</code> and <code>InitProviderInterface</code> for the time being.  These will make the application crash.</p>
+<h3><a class="anchor" aria-hidden="true" id="a-namedefiningcommandsadefining-commands"></a><a href="#a-namedefiningcommandsadefining-commands" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a name="DefiningCommands"></a>Defining commands</h3>
+<p>Symfony Console commands can be defined in the <code>config/commands.config.php</code>.  They will be instantiated and added to Console application when it is created.</p>
+<p>A typical <code>commands.config.php</code> would contain the following:</p>
+<pre><code class="hljs css language-php"><span class="hljs-keyword">use</span> <span class="hljs-title">Symfony</span>\<span class="hljs-title">Component</span>\<span class="hljs-title">Console</span>\<span class="hljs-title">Input</span>\<span class="hljs-title">InputArgument</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">Symfony</span>\<span class="hljs-title">Component</span>\<span class="hljs-title">Console</span>\<span class="hljs-title">Input</span>\<span class="hljs-title">InputOption</span>;
+<span class="hljs-keyword">use</span> <span class="hljs-title">LaminasSymfonyConsole</span>\<span class="hljs-title">Factory</span>\<span class="hljs-title">AbstractCommandFactory</span>;
+
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-string">'commands'</span> =&gt; [
+        [
+            <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'test'</span>,
+            <span class="hljs-string">'description'</span> =&gt; <span class="hljs-string">'Test command'</span>,
+            <span class="hljs-string">'help'</span> =&gt; <span class="hljs-string">'Test help message'</span>,
+            <span class="hljs-string">'class'</span> =&gt; Test::class,
+            <span class="hljs-string">'arguments'</span> =&gt; [
+                [
+                    <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'arg1'</span>,
+                    <span class="hljs-string">'mode'</span> =&gt; InputArgument::OPTIONAL,
+                    <span class="hljs-string">'description'</span> =&gt; <span class="hljs-string">'Argument 1'</span>,
+                ],
+                [
+                    <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'arg2'</span>,
+                    <span class="hljs-string">'mode'</span> =&gt; InputArgument::OPTIONAL,
+                    <span class="hljs-string">'description'</span> =&gt; <span class="hljs-string">'Argument 2'</span>,
+                    <span class="hljs-string">'default'</span> =&gt; <span class="hljs-string">'some default'</span>,
+                ],
+            ],
+            <span class="hljs-string">'options'</span> =&gt; [
+                [
+                    <span class="hljs-string">'name'</span> =&gt; <span class="hljs-string">'yell'</span>,
+                    <span class="hljs-string">'shortcut'</span> =&gt; <span class="hljs-string">'y'</span>,
+                    <span class="hljs-string">'mode'</span> =&gt; InputOption::VALUE_REQUIRED,
+                    <span class="hljs-string">'description'</span> =&gt; <span class="hljs-string">'yell option'</span>,
+                ],
+            ],
+        ],
+    ],
+    <span class="hljs-string">'service_manager'</span> =&gt; [
+        <span class="hljs-string">'factories'</span> =&gt; [
+            Test::class =&gt; AbstractCommandFactory::class,
+        ]
+    ]
+];
+</code></pre>
+<p><code>commands</code> is an array of Symfony Command definitions.  The <code>name</code>, <code>description</code> and <code>help</code> usage is defined in the Symfony Command documentation.
+The<code>arguments</code> and <code>options</code> arrays contains lists of Symfony <code>InputArgument</code>and <code>InputOptions</code> definitions.</p>
+<p>The <code>class</code> element of a command definition refers to the name of the class that implements the Symfony Command.  It is mandatory that the class extends the <code>Symfony\Component\Console\Command\Command</code> class.
+<code>class</code>can either by a class name or a string.  The application will use the Laminas Framework Service Manager to instantiate the class which allows for the use of factories to create the command and inject dependencies.
+<code>class</code> can also be an instance of a <code>Symfony\Component\Console\Command\Command</code> class.</p>
+<p><code>service_manager</code> contains the typical Service Manager configuration that will be added to the application Service Manager.<br>
+If a Command does not need a specific factory to create it, the <code>class</code> element of the Command definition can simply provide the class name of the Command and the Service Manager will use <code>AbstractCommandFactory</code> to create the command.</p>
+<h2><a class="anchor" aria-hidden="true" id="feedback"></a><a href="#feedback" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Feedback</h2>
+<p>This package is work-in-progress.  It has not been thoroughly tested for all thinkable cases.  If you find a problem, please log an issue.</p>
+<p>I am also very opened to feedback and suggestions for improvements.</p>
+<h6><a class="anchor" aria-hidden="true" id="copy-2019-eric-richer-ericrichervistoconsultingcom"></a><a href="#copy-2019-eric-richer-ericrichervistoconsultingcom" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>© 2019 Eric Richer (<a href="mailto:eric.richer@vistoconsulting.com">eric.richer@vistoconsulting.com</a>)</h6>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zf-console-symfony"><span class="arrow-prev">← </span><span>zf-console-symfony</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#introduction">Introduction</a></li><li><a href="#requirements">Requirements</a></li><li><a href="#installation">Installation</a></li><li><a href="#creating-a-console-application">Creating a console application</a><ul class="toc-headings"><li><a href="#configuring-the-application">Configuring the application</a></li><li><a href="#a-namedefiningcommandsadefining-commands"><a name="DefiningCommands"></a>Defining commands</a></li></ul></li><li><a href="#feedback">Feedback</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="copyright">Copyright © 2020 Eric Richer</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
