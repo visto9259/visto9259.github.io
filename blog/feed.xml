@@ -4,7 +4,7 @@
         <title>visto9259 Blog</title>
         <link>https://visto9259.github.io/blog</link>
         <description>The best place to stay up-to-date with the latest visto9259 news and events.</description>
-        <lastBuildDate>Tue, 07 Apr 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 09 Apr 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -15,10 +15,10 @@
         <copyright>Copyright © 2020 VISTO Consulting inc.</copyright>
         <item>
             <title><![CDATA[Welcome]]></title>
-            <link>https://visto9259.github.io/blog/2020/04/07/welcome.html</link>
-            <guid>https://visto9259.github.io/blog/2020/04/07/welcome.html</guid>
-            <pubDate>Tue, 07 Apr 2020 06:00:00 GMT</pubDate>
-            <description><![CDATA[<p>Welcome to my homepage on GitHub.</p> ]]></description>
+            <link>https://visto9259.github.io/blog/2020/04/09/welcome.html</link>
+            <guid>https://visto9259.github.io/blog/2020/04/09/welcome.html</guid>
+            <pubDate>Thu, 09 Apr 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Welcome to my homepage on GitHub.</p> <p>I have just finished setting up my GitHub personal website using Docusaurus. My goal is to publish documentation of packages that I have developed over time and made available on GitHub.</p> ]]></description>
         </item>
     </channel>
 </rss>
