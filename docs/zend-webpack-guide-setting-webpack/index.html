@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Setting up the Webpack bundler · visto9259</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt;This is not a guide on Webpack bundling. I recommend this excellent [answer](https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project)"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Setting up the Webpack bundler · visto9259"/><meta property="og:type" content="website"/><meta property="og:url" content="https://visto9259.github.io/"/><meta property="og:description" content="&gt;This is not a guide on Webpack bundling. I recommend this excellent [answer](https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project)"/><meta property="og:image" content="https://visto9259.github.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://visto9259.github.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/7890483.jpeg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://visto9259.github.io/blog/atom.xml" title="visto9259 Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://visto9259.github.io/blog/feed.xml" title="visto9259 Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/7890483.jpeg" alt="visto9259"/><h2 class="headerTitleWithLogo">visto9259</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/php-webpack-plugin" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/zend-webpack-guide-getting-started" target="_self">Guides</a></li><li class=""><a href="/docs/me" target="_self">About</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/visto9259" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Integrating Zendframework with Webpack</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Integrating Zendframework with Webpack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-getting-started">Getting started</a></li><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-setting-up">Setting up ZF3 MVC to use Webpack</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zend-webpack-guide-setting-webpack">Setting up the Webpack bundler</a></li><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-setting-zf3">Setting up ZF3 MVC to use the manifest</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Setting up the Webpack bundler</h1></header><article><div><span><blockquote>
+<p>This is not a guide on Webpack bundling. I recommend this excellent <a href="https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project">answer</a>
+on Stackoverflow by <a href="https://github.com/Loilo">Loilo</a> to get you started on using Webpack
+and, obviously, reading the Webpack <a href="https://webpack.js.org/concepts/">documentation</a> helps a lot.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="webpack-configuration"></a><a href="#webpack-configuration" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Webpack configuration</h2>
+<p>As <a href="https://github.com/Loilo">Loilo</a> suggests, I keep my Webpack config files in the <code>build</code> folder like this:</p>
+<pre><code class="hljs">.
++--browser
+|<span class="hljs-string">  +--build
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  config.base.js
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  config.developement.js
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  config.production.js
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  paths.js
+</span>|<span class="hljs-string">  +--src
+</span>|<span class="hljs-string">    +--lib
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">  common-code.js
+</span>|<span class="hljs-string">    +--mymodule
+</span>|<span class="hljs-string">       +--mycontroller
+</span>|<span class="hljs-string">          index.js
+</span>|<span class="hljs-string">          details.js
+</span>|<span class="hljs-string">          edit.js
++--...
+</span></code></pre>
+<p>I configure Webpack to output the bundles to the <code>public/dist</code> folder and to use
+<code>/dist/</code> as the <code>publicPath</code>.  I also configure Webpack to also output any assets and css in <code>public/dist</code>.</p>
+<p><code>paths.js</code></p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">SRC</span>: path.resolve(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'src'</span>),
+    <span class="hljs-attr">DIST</span>: path.resolve(__dirname, <span class="hljs-string">'..'</span>,<span class="hljs-string">'..'</span>,<span class="hljs-string">'public'</span>,<span class="hljs-string">'dist'</span>),
+    <span class="hljs-attr">ASSETS</span>: <span class="hljs-string">'/dist/'</span>,
+};
+</code></pre>
+<p><code>config.development.js</code></p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> merge = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack-merge'</span>);
+
+<span class="hljs-built_in">module</span>.exports = merge(<span class="hljs-built_in">require</span>(<span class="hljs-string">'./config.base'</span>), {
+    <span class="hljs-attr">mode</span>: <span class="hljs-string">'development'</span>,
+    <span class="hljs-attr">watch</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">devtool</span>: <span class="hljs-string">'inline-source-map'</span>,
+});
+</code></pre>
+<p><code>config.base.js</code></p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> {SRC, DIST, ASSETS} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./paths'</span>);
+<span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack'</span>);
+
+<span class="hljs-comment">// If you need JQuery, this is how to do it</span>
+<span class="hljs-keyword">new</span> webpack.ProvidePlugin({
+    <span class="hljs-attr">$</span>: <span class="hljs-string">"jquery"</span>,
+    <span class="hljs-attr">jQuery</span>: <span class="hljs-string">"jquery"</span>,
+});
+
+<span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">entry</span>: {
+        <span class="hljs-attr">main</span>: path.resolve(SRC, <span class="hljs-string">'index.js'</span>),
+        <span class="hljs-string">'application.index'</span>: path.resolve(SRC, <span class="hljs-string">'application/index.js'</span>)
+    },
+    <span class="hljs-attr">output</span>: {
+        <span class="hljs-attr">path</span>: DIST,
+        <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+        <span class="hljs-attr">publicPath</span>: ASSETS
+    },
+    <span class="hljs-attr">module</span>: {
+        <span class="hljs-attr">rules</span>: [
+            {
+                <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,
+                <span class="hljs-attr">use</span>: [
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'style-loader'</span>, <span class="hljs-attr">options</span>: { <span class="hljs-attr">injectType</span>: <span class="hljs-string">'linkTag'</span>}},
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'file-loader'</span>, <span class="hljs-attr">options</span>: {
+                        <span class="hljs-attr">name</span>: <span class="hljs-string">'[name].[ext]'</span>,
+                            <span class="hljs-attr">outputPath</span>: <span class="hljs-string">'css'</span>
+                    }},
+                ]
+            },
+            {
+                <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(gif|png|jpg|jpeg)$/</span>,
+                <span class="hljs-attr">loaders</span>:[
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'file-loader'</span>, <span class="hljs-attr">options</span>: {<span class="hljs-attr">name</span>: <span class="hljs-string">'[name].[ext]'</span>, <span class="hljs-attr">outputPath</span>: <span class="hljs-string">'css'</span>}}
+                ]
+            }
+        ]
+    },
+    <span class="hljs-attr">optimization</span>: {
+        <span class="hljs-attr">splitChunks</span>: {
+            <span class="hljs-attr">chunks</span>: <span class="hljs-string">'all'</span>,
+            <span class="hljs-attr">maxInitialRequests</span>: <span class="hljs-literal">Infinity</span>,
+            <span class="hljs-attr">minSize</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">cacheGroups</span>: {
+                <span class="hljs-attr">vendor</span>: {
+                    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/[\\/]node_modules[\\/]/</span>,
+                    name(<span class="hljs-built_in">module</span>) {
+                        <span class="hljs-comment">// Get the name. e.g. node_modules/packageName/not/this/part.js</span>
+                        <span class="hljs-comment">// or node_modules/packageName</span>
+                        <span class="hljs-keyword">const</span> packageName = <span class="hljs-built_in">module</span>.context.match(<span class="hljs-regexp">/[\\/]node_modules[\\/](.*?)([\\/]|$)/</span>)[<span class="hljs-number">1</span>];
+                        <span class="hljs-keyword">return</span> <span class="hljs-string">`npm.<span class="hljs-subst">${packageName.replace(<span class="hljs-string">'@'</span>,<span class="hljs-string">''</span>)}</span>`</span>;
+                    }
+                }
+            }
+        }
+    },
+
+    <span class="hljs-attr">plugins</span>: [
+    ]
+};
+</code></pre>
+<p>This seems like a lot to digest but if you are familiar with Webpack, it should make sense.</p>
+<p>This will generate the following files in the <code>public/dist</code> folder:</p>
+<pre><code class="hljs">...
++--public
+|<span class="hljs-string">  +--dist
+</span>|<span class="hljs-string">    +--assets
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">  &lt;your asset files&gt;
+</span>|<span class="hljs-string">    +--css
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">  &lt;your css files&gt;
+</span>|<span class="hljs-string">    index.js
+</span>|<span class="hljs-string">    application.index.js
+</span>|<span class="hljs-string">    npm.bootstrap.js
+</span>|<span class="hljs-string">    npm.jquery.js
+</span>|<span class="hljs-string">    npm.popper.js.js
++--...
+</span></code></pre>
+<p>But you still have the complexity of figuring out which scripts goes with which view
+template. Fortunately, you can add plugins to webpack to generate a manifest linking entry points to bundles.</p>
+<h2><a class="anchor" aria-hidden="true" id="generating-a-manifest-of-your-bundles"></a><a href="#generating-a-manifest-of-your-bundles" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Generating a manifest of your bundles</h2>
+<p>I have written a Webpack plugin that generates a simple manifest in a PHP associative array.</p>
+<p>The plugin is called <a href="https://github.com/visto9259/php-webpack-plugin">@visto9259/php-webpack-plugin</a> and you can look at this <a href="/docs/php-webpack-plugin">page</a> on how to use it.</p>
+<p>By adding the plugin to the <code>config.base.js</code> file like this:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> {SRC, DIST, ASSETS} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./paths'</span>);
+<span class="hljs-keyword">const</span> webpack = <span class="hljs-built_in">require</span>(<span class="hljs-string">'webpack'</span>);
+
+<span class="hljs-keyword">const</span> PhpWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@visto9259/php-webpack-plugin'</span>);
+
+<span class="hljs-comment">// If you need JQuery, this is how to do it</span>
+<span class="hljs-keyword">new</span> webpack.ProvidePlugin({
+    <span class="hljs-attr">$</span>: <span class="hljs-string">"jquery"</span>,
+    <span class="hljs-attr">jQuery</span>: <span class="hljs-string">"jquery"</span>,
+});
+
+<span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">entry</span>: {
+        <span class="hljs-attr">main</span>: path.resolve(SRC, <span class="hljs-string">'index.js'</span>),
+        <span class="hljs-string">'application.index'</span>: path.resolve(SRC, <span class="hljs-string">'application/index.js'</span>)
+    },
+    <span class="hljs-attr">output</span>: {
+        <span class="hljs-attr">path</span>: DIST,
+        <span class="hljs-attr">filename</span>: <span class="hljs-string">'[name].js'</span>,
+        <span class="hljs-attr">publicPath</span>: ASSETS
+    },
+    <span class="hljs-attr">module</span>: {
+        <span class="hljs-attr">rules</span>: [
+            {
+                <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.css$/</span>,
+                <span class="hljs-attr">use</span>: [
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'style-loader'</span>, <span class="hljs-attr">options</span>: { <span class="hljs-attr">injectType</span>: <span class="hljs-string">'linkTag'</span>}},
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'file-loader'</span>, <span class="hljs-attr">options</span>: {
+                        <span class="hljs-attr">name</span>: <span class="hljs-string">'[name].[ext]'</span>,
+                            <span class="hljs-attr">outputPath</span>: <span class="hljs-string">'css'</span>
+                    }},
+                ]
+            },
+            {
+                <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.(gif|png|jpg|jpeg)$/</span>,
+                <span class="hljs-attr">loaders</span>:[
+                    {<span class="hljs-attr">loader</span>: <span class="hljs-string">'file-loader'</span>, <span class="hljs-attr">options</span>: {<span class="hljs-attr">name</span>: <span class="hljs-string">'[name].[ext]'</span>, <span class="hljs-attr">outputPath</span>: <span class="hljs-string">'css'</span>}}
+                ]
+            }
+        ]
+    },
+    <span class="hljs-attr">optimization</span>: {
+        <span class="hljs-attr">splitChunks</span>: {
+            <span class="hljs-attr">chunks</span>: <span class="hljs-string">'all'</span>,
+            <span class="hljs-attr">maxInitialRequests</span>: <span class="hljs-literal">Infinity</span>,
+            <span class="hljs-attr">minSize</span>: <span class="hljs-number">0</span>,
+            <span class="hljs-attr">cacheGroups</span>: {
+                <span class="hljs-attr">vendor</span>: {
+                    <span class="hljs-attr">test</span>: <span class="hljs-regexp">/[\\/]node_modules[\\/]/</span>,
+                    name(<span class="hljs-built_in">module</span>) {
+                        <span class="hljs-comment">// Get the name. e.g. node_modules/packageName/not/this/part.js</span>
+                        <span class="hljs-comment">// or node_modules/packageName</span>
+                        <span class="hljs-keyword">const</span> packageName = <span class="hljs-built_in">module</span>.context.match(<span class="hljs-regexp">/[\\/]node_modules[\\/](.*?)([\\/]|$)/</span>)[<span class="hljs-number">1</span>];
+                        <span class="hljs-keyword">return</span> <span class="hljs-string">`npm.<span class="hljs-subst">${packageName.replace(<span class="hljs-string">'@'</span>,<span class="hljs-string">''</span>)}</span>`</span>;
+                    }
+                }
+            }
+        }
+    },
+
+    <span class="hljs-attr">plugins</span>: [
+        <span class="hljs-keyword">new</span> PhpWebpackPlugin(),
+    ]
+};
+</code></pre>
+<p>Webpack will generate a <code>scriptlist.php</code> file in the <code>public/dist</code> folder.</p>
+<pre><code class="hljs css language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-string">'main'</span> =&gt; [
+        <span class="hljs-string">'npm.bootstrap'</span> =&gt;  <span class="hljs-string">'/dist/npm.bootstrap.js'</span>,
+        <span class="hljs-string">'npm.jquery'</span> =&gt;  <span class="hljs-string">'/dist/npm.jquery.js'</span>,
+        <span class="hljs-string">'npm.popper.js'</span> =&gt;  <span class="hljs-string">'/dist/npm.popper.js.js'</span>,
+        <span class="hljs-string">'npm.style-loader'</span> =&gt;  <span class="hljs-string">'/dist/npm.style-loader.js'</span>,
+        <span class="hljs-string">'npm.webpack'</span> =&gt;  <span class="hljs-string">'/dist/npm.webpack.js'</span>,
+        <span class="hljs-string">'main'</span> =&gt;  <span class="hljs-string">'/dist/main.js'</span>,
+    ],
+    <span class="hljs-string">'application.index'</span> =&gt; [
+        <span class="hljs-string">'npm.bootstrap'</span> =&gt;  <span class="hljs-string">'/dist/npm.bootstrap.js'</span>,
+        <span class="hljs-string">'npm.jquery'</span> =&gt;  <span class="hljs-string">'/dist/npm.jquery.js'</span>,
+        <span class="hljs-string">'npm.popper.js'</span> =&gt;  <span class="hljs-string">'/dist/npm.popper.js.js'</span>,
+        <span class="hljs-string">'npm.style-loader'</span> =&gt;  <span class="hljs-string">'/dist/npm.style-loader.js'</span>,
+        <span class="hljs-string">'npm.webpack'</span> =&gt;  <span class="hljs-string">'/dist/npm.webpack.js'</span>,
+        <span class="hljs-string">'application.index'</span> =&gt;  <span class="hljs-string">'/dist/application.index.js'</span>,
+    ],
+];
+</code></pre>
+<p>This file can then be consumed in the ZF3 application to match the list of scripts in the bundle of each entry point.</p>
+<p>The next step is to set up your ZF3 application to consume the manifest.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zend-webpack-guide-setting-up"><span class="arrow-prev">← </span><span>Setting up ZF3 MVC to use Webpack</span></a><a class="docs-next button" href="/docs/zend-webpack-guide-setting-zf3"><span>Setting up ZF3 MVC to use the manifest</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#webpack-configuration">Webpack configuration</a></li><li><a href="#generating-a-manifest-of-your-bundles">Generating a manifest of your bundles</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="copyright">Copyright © 2020 VISTO Consulting inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

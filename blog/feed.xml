@@ -4,7 +4,7 @@
         <title>visto9259 Blog</title>
         <link>https://visto9259.github.io/blog</link>
         <description>The best place to stay up-to-date with the latest visto9259 news and events.</description>
-        <lastBuildDate>Thu, 09 Apr 2020 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 10 Apr 2020 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,13 @@
             <link>https://visto9259.github.io/blog</link>
         </image>
         <copyright>Copyright © 2020 VISTO Consulting inc.</copyright>
+        <item>
+            <title><![CDATA[Zend Framework and Webpack integration]]></title>
+            <link>https://visto9259.github.io/blog/2020/04/10/zf3-webpack.html</link>
+            <guid>https://visto9259.github.io/blog/2020/04/10/zf3-webpack.html</guid>
+            <pubDate>Fri, 10 Apr 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>If you are using ZF3 MVC and want to also use Webpack to bundle and manage dependencies in your frontend Javascript, I wrote a <a href="/docs/zend-webpack-guide.md">guide</a> that explains how to use the <a href="https://github.com/visto9259/zend-webpack"><code>zend-webpack</code></a> ZF3 module and <a href="https://github.com/visto9259/php-webpack-plugin"><code>php-webpack-plugin</code></a> Webpack plugin to integrate and automate ...</p>]]></description>
+        </item>
         <item>
             <title><![CDATA[Welcome]]></title>
             <link>https://visto9259.github.io/blog/2020/04/09/welcome.html</link>

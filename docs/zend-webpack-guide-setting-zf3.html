@@ -1,0 +1,177 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Setting up ZF3 MVC to use the manifest · visto9259</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="By now, you should have been able to generate bundles of JS files in the `public/dist` folder"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Setting up ZF3 MVC to use the manifest · visto9259"/><meta property="og:type" content="website"/><meta property="og:url" content="https://visto9259.github.io/"/><meta property="og:description" content="By now, you should have been able to generate bundles of JS files in the `public/dist` folder"/><meta property="og:image" content="https://visto9259.github.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://visto9259.github.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/7890483.jpeg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://visto9259.github.io/blog/atom.xml" title="visto9259 Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://visto9259.github.io/blog/feed.xml" title="visto9259 Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/7890483.jpeg" alt="visto9259"/><h2 class="headerTitleWithLogo">visto9259</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/php-webpack-plugin" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/zend-webpack-guide-getting-started" target="_self">Guides</a></li><li class=""><a href="/docs/me" target="_self">About</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/visto9259" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Integrating Zendframework with Webpack</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Integrating Zendframework with Webpack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-getting-started">Getting started</a></li><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-setting-up">Setting up ZF3 MVC to use Webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/zend-webpack-guide-setting-webpack">Setting up the Webpack bundler</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/zend-webpack-guide-setting-zf3">Setting up ZF3 MVC to use the manifest</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Setting up ZF3 MVC to use the manifest</h1></header><article><div><span><p>By now, you should have been able to generate bundles of JS files in the <code>public/dist</code> folder
+of your application with a <code>scriplist.php</code> manifest.</p>
+<p>Your application directory structure should look like this:</p>
+<pre><code class="hljs">.
++--browser
+|<span class="hljs-string">  +--build
+</span>|<span class="hljs-string">  +--src
++--config
+</span>|<span class="hljs-string">   +--autoload
+</span>|<span class="hljs-string">        global.php
+</span>|<span class="hljs-string">        local.php
+</span>|<span class="hljs-string">   application.config.php
++--data
++--module
+</span>|<span class="hljs-string">  +--Application
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  +--config
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  +--src
+</span>|<span class="hljs-string">  </span>|<span class="hljs-string">  +--view
+</span>|<span class="hljs-string">  +--AnotherModule
++--public
+</span>|<span class="hljs-string">    +--assets
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">  &lt;your asset files&gt;
+</span>|<span class="hljs-string">    +--css
+</span>|<span class="hljs-string">    </span>|<span class="hljs-string">  &lt;your css files&gt;
+</span>|<span class="hljs-string">    index.js
+</span>|<span class="hljs-string">    application.index.js
+</span>|<span class="hljs-string">    npm.bootstrap.js
+</span>|<span class="hljs-string">    npm.jquery.js
+</span>|<span class="hljs-string">    npm.popper.js.js
+</span>|<span class="hljs-string">    scriptlist.php
++--vendor
+composer.json
+composer.lock
+package.json
+</span></code></pre>
+<p>How do you use the manifest in your ZF3 MVC application?</p>
+<p>I also create a ZF3 module called <code>zend-webpack</code> to automate the loading of Webpack bundles
+that consumes the manifest file.</p>
+<h2><a class="anchor" aria-hidden="true" id="using-the-zend-webpack-module"></a><a href="#using-the-zend-webpack-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using the zend-webpack module</h2>
+<p>The <code>zend-webpack</code> is documented in this <a href="/docs/zend-webpack">page</a>.</p>
+<p><code>zend-webpack</code> provides two main pieces: a route listener and a view helper plugin.</p>
+<p>The listener attaches to <code>MvcEvent::EVENT_DISPATCH (&quot;dispatch&quot;)</code> event of the <code>AbstractController</code>class.
+When it fires, it will look at the matched route to determine an <em>entry point</em> that the view template
+associated with the route should use.</p>
+<p>The <code>zend-webpack</code> module requires a configuration file in the <code>config/autoload</code> folder called
+<code>webpack.global.php</code> (the name of the file is irrelevant) which contains the following:</p>
+<pre><code class="hljs css language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">return</span> [
+    <span class="hljs-comment">/**
+     * webpack configuration
+     */</span>
+    <span class="hljs-string">'webpack'</span> =&gt; [
+        <span class="hljs-comment">/**
+         *
+         */</span>
+        <span class="hljs-string">'dist_path'</span> =&gt; <span class="hljs-string">'dist/'</span>,
+
+        <span class="hljs-comment">/**
+         * Default entry point or key (see routes below)
+         */</span>
+        <span class="hljs-string">'default_entry_point'</span> =&gt; <span class="hljs-string">'main'</span>,
+
+        <span class="hljs-comment">/**
+         * Entry point map file generated by Webpack
+         * Change this according to your webpack configuration
+         * A webpack plugin is available to generate the script list
+         */</span>
+        <span class="hljs-string">'entrypoint_map_file'</span> =&gt; <span class="hljs-keyword">__DIR__</span> . <span class="hljs-string">'/../../public/dist/scriptlist.php'</span>,
+
+
+        <span class="hljs-comment">/**
+         * Associative array of routes to match.
+         * Each entry can either be:
+         *  a) 'key' only : this route will map to the default entry point set by 'default_entry_point'
+         *  b) 'key' =&gt; 'value': this route map to the entry point set by 'value'
+         *
+         * The 'key' can be a wildcard.  For example: 'items*' will match all routes starting with 'items' such as 'item/add'
+         *
+         */</span>
+        <span class="hljs-string">'routes'</span> =&gt; [
+            <span class="hljs-string">'home'</span> =&gt; <span class="hljs-string">'application.index'</span>,
+            <span class="hljs-string">'mymoduleroute'</span>,
+        ],
+    ],
+]; 
+</code></pre>
+<p>Using this configuration file, the <code>home</code> route (assuming this is the route for indexAction in the
+Application controller) will match the <code>application.index</code> entry point.</p>
+<p>The <code>mymoduleroute</code> route does not have an associated entry point and will default to the <code>main</code> entry
+point as defined by <code>default_entry_point</code>.</p>
+<p>The listener then uses the entry points map file set by <code>entrypoint_map_file</code> to create an array of
+scripts files to be loaded for the route.  This array is stored in the <code>scriptlist</code> view variable of the layout template
+for the controller.</p>
+<blockquote>
+<p><em>A alternate listener will come in the future to match view templates to entry points instead of
+using route matching. If someone wants to contribute this listener, I welcome it.</em></p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="using-the-webpackscriptloader-view-helper-plugin"></a><a href="#using-the-webpackscriptloader-view-helper-plugin" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using the <code>webpackScriptLoader</code> view helper plugin</h2>
+<p>The <code>zend-webpack</code> also provides a view helper plugin that adds the script tags to the <code>&lt;head&gt;</code>
+section of the page.  It depends on the <a href="https://docs.zendframework.com/zend-view/helpers/head-script/">HeadScript</a>
+helper to append the tags.</p>
+<p>The layout template needs to call the plugin to add all the scripts:</p>
+<pre><code class="hljs css language-php">&lt;html&gt;
+&lt;head&gt;
+   &lt;!-- other head tags --&gt;
+   <span class="hljs-meta">&lt;?php</span>
+      <span class="hljs-keyword">$this</span>-&gt;webpackScriptLoader();
+      <span class="hljs-keyword">echo</span> <span class="hljs-keyword">$this</span>-&gt;headscript();
+   <span class="hljs-meta">?&gt;</span>
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!-- your rendering --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>If a route has no associated entry point, then <code>$this-&gt;webpackScriptLoader()</code> does nothing.</p>
+<h2><a class="anchor" aria-hidden="true" id="further-work"></a><a href="#further-work" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Further work</h2>
+<p>I hope you found this guide useful.</p>
+<p>It's work in progress and if you have questions, found an error or think of additional feature,
+let me know by creating an <a href="https://github.com/visto9259/github.io.docs/issues">issue</a>.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/zend-webpack-guide-setting-webpack"><span class="arrow-prev">← </span><span>Setting up the Webpack bundler</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#using-the-zend-webpack-module">Using the zend-webpack module</a></li><li><a href="#using-the-webpackscriptloader-view-helper-plugin">Using the <code>webpackScriptLoader</code> view helper plugin</a></li><li><a href="#further-work">Further work</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="copyright">Copyright © 2020 VISTO Consulting inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
