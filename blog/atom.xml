@@ -13,7 +13,7 @@
         <id>https://visto9259.github.io/blog/2020/04/10/zf3-webpack.html</id>
         <link href="https://visto9259.github.io/blog/2020/04/10/zf3-webpack.html"/>
         <updated>2020-04-10T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>If you are using ZF3 MVC and want to also use Webpack to bundle and manage dependencies in your frontend Javascript, I wrote a <a href="/docs/zend-webpack-guide.md">guide</a> that explains how to use the <a href="https://github.com/visto9259/zend-webpack"><code>zend-webpack</code></a> ZF3 module and <a href="https://github.com/visto9259/php-webpack-plugin"><code>php-webpack-plugin</code></a> Webpack plugin to integrate and automate ...</p>]]></summary>
+        <summary type="html"><![CDATA[<p>If you are using ZF3 MVC and want to also use Webpack to bundle and manage dependencies in your frontend Javascript, I wrote a <a href="/docs/zend-webpack-guide-getting-started">guide</a> that explains how to use the <a href="https://github.com/visto9259/zend-webpack"><code>zend-webpack</code></a> ZF3 module and <a href="https://github.com/visto9259/php-webpack-plugin"><code>php-webpack-plugin</code></a> Webpack plugin to integrate and automate ...</p>]]></summary>
         <author>
             <name>Eric Richer</name>
             <email/>
