@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Setting up Laminas MVC to use Webpack · visto9259</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt;This is not a guide on setting up a Webpack environment.  I got inspired by this excellent [answer](https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project)"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Setting up Laminas MVC to use Webpack · visto9259"/><meta property="og:type" content="website"/><meta property="og:url" content="https://visto9259.github.io/"/><meta property="og:description" content="&gt;This is not a guide on setting up a Webpack environment.  I got inspired by this excellent [answer](https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project)"/><meta property="og:image" content="https://visto9259.github.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://visto9259.github.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/7890483.jpeg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://visto9259.github.io/blog/atom.xml" title="visto9259 Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://visto9259.github.io/blog/feed.xml" title="visto9259 Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/7890483.jpeg" alt="visto9259"/><h2 class="headerTitleWithLogo">visto9259</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/php-webpack-plugin" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/laminas-webpack-guide-getting-started" target="_self">Guides</a></li><li class=""><a href="/docs/me" target="_self">About</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/visto9259" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Integrating Laminas MVC with Webpack</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Integrating Laminas MVC with Webpack</h3><ul class=""><li class="navListItem"><a class="navItem" href="/docs/laminas-webpack-guide-getting-started">Getting started</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/laminas-webpack-guide-setting-up">Setting up Laminas MVC to use Webpack</a></li><li class="navListItem"><a class="navItem" href="/docs/laminas-webpack-guide-setting-webpack">Setting up the Webpack bundler</a></li><li class="navListItem"><a class="navItem" href="/docs/laminas-webpack-guide-setting-laminas">Setting up Laminas MVC to use the manifest</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Setting up Laminas MVC to use Webpack</h1></header><article><div><span><blockquote>
+<p>This is not a guide on setting up a Webpack environment.  I got inspired by this excellent <a href="https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project">answer</a>
+on Stackoverflow by <a href="https://github.com/Loilo">Loilo</a>.  Further investigations led me to the
+Webpack plugin <a href="https://github.com/castiron/webpack-php-manifest">castiron/webpack-php-manifest</a>.</p>
+</blockquote>
+<blockquote>
+<p>This is not a guide on setting up a Laminas MVC application either.  The Laminas MVC Skeleton is a good place to start
+and this is what I used for my own application.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-your-laminas-application"></a><a href="#setting-up-your-laminas-application" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up your Laminas application</h2>
+<p>So here's a typical Laminas MVC directory structure:</p>
+<pre><code class="hljs">.
++<span class="hljs-comment">--config</span>
+|   +<span class="hljs-comment">--autoload</span>
+|   application.config.php
++<span class="hljs-comment">--data</span>
++<span class="hljs-comment">--module</span>
+|  +<span class="hljs-comment">--Application</span>
+|  |  +<span class="hljs-comment">--config</span>
+|  |  +<span class="hljs-comment">--src</span>
+|  |  +<span class="hljs-comment">--view</span>
+|  +<span class="hljs-comment">--AnotherModule</span>
++<span class="hljs-comment">--public</span>
+|  +<span class="hljs-comment">--js</span>
+|  +<span class="hljs-comment">--css</span>
++<span class="hljs-comment">--vendor</span>
+composer.json
+composer.<span class="hljs-keyword">lock</span>
+</code></pre>
+<p>So where's the best place to hold all your JS sources?  That's up to you.  I personally
+decided to have all my JS sources in a <code>browser</code> subfolder of the root directory.</p>
+<p>Then I followed the guidelines provided by <a href="https://github.com/Loilo">Loilo</a> in his Stackoverflow <a href="https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project">answer</a>
+and created <code>src</code> and <code>build</code> folders within <code>browser</code> like this:</p>
+<pre><code class="hljs">.
++<span class="hljs-comment">--browser</span>
+|  +<span class="hljs-comment">--build</span>
+|  +<span class="hljs-comment">--src</span>
++<span class="hljs-comment">--config</span>
+|   +<span class="hljs-comment">--autoload</span>
+|   application.config.php
++<span class="hljs-comment">--data</span>
++<span class="hljs-comment">--module</span>
+|  +<span class="hljs-comment">--Application</span>
+|  |  +<span class="hljs-comment">--config</span>
+|  |  +<span class="hljs-comment">--src</span>
+|  |  +<span class="hljs-comment">--view</span>
+|  +<span class="hljs-comment">--AnotherModule</span>
++<span class="hljs-comment">--public</span>
+|  +<span class="hljs-comment">--js</span>
+|  +<span class="hljs-comment">--css</span>
++<span class="hljs-comment">--vendor</span>
+composer.json
+composer.<span class="hljs-keyword">lock</span>
+</code></pre>
+<p>I also decided that the root folder would also be where the <code>node</code> modules would be located.
+It could have been anywhere but it allows you to use all kinds of <code>node</code> tools and automation
+in the project. So once you initialize your <code>node</code> environment, you end up with this:</p>
+<pre><code class="hljs">.
++<span class="hljs-comment">--browser</span>
+|  +<span class="hljs-comment">--build</span>
+|  +<span class="hljs-comment">--src</span>
++<span class="hljs-comment">--config</span>
+|   +<span class="hljs-comment">--autoload</span>
+|   application.config.php
++<span class="hljs-comment">--data</span>
++<span class="hljs-comment">--module</span>
+|  +<span class="hljs-comment">--Application</span>
+|  |  +<span class="hljs-comment">--config</span>
+|  |  +<span class="hljs-comment">--src</span>
+|  |  +<span class="hljs-comment">--view</span>
+|  +<span class="hljs-comment">--AnotherModule</span>
++<span class="hljs-comment">--node_modules</span>
++<span class="hljs-comment">--public</span>
+|  +<span class="hljs-comment">--js</span>
+|  +<span class="hljs-comment">--css</span>
++<span class="hljs-comment">--vendor</span>
+composer.json
+composer.<span class="hljs-keyword">lock</span>
+package.json
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-your-js-files"></a><a href="#setting-up-your-js-files" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up your JS files</h2>
+<p>How you want to set up your JS source files is up to you.</p>
+<p>I personally wanted to have some level of structure and organization in source files that
+matches the structure of my application's pages.  Since each page rendered by the application
+is its own frontend JS app, my <code>src</code> folder matches the <code>module/controller-action/view</code> structure.</p>
+<p>In addition, you can share common JS modules using a <code>lib</code> folder within the <code>src</code> folder.</p>
+<p>For example, if you have a module called <code>mymodule</code> with a controller called <code>mycontroller</code>
+and the following actions <code>index</code>, <code>edit</code>, <code>detail</code> with corresponding view templates, then you
+can use a structure like this:</p>
+<pre><code class="hljs">.
++--browser
+|  +--build
+|  +--src
+|    +--<span class="hljs-class"><span class="hljs-keyword">lib</span></span>
+|    |  common-code.js
+|    +--mymodule
+|       +--mycontroller
+|          index.js
+|          details.js
+|          edit.js
++--...
+</code></pre>
+<p>The important concept here is that <code>index.js</code>, <code>details.js</code> and <code>edit.js</code> are <em>entry points</em>
+for the JS scripts that the corresponding view template will need to load.</p>
+<p>This means that <code>index.js</code> will
+need to <em>require</em> or <em>import</em> all the libraries and modules that it needs to rendered the frontend
+part of the page such that Webpack can create a bundle of scripts for the view.</p>
+<p>As example, if you need Bootstrap in your page, then <code>index.js</code> could look like:</p>
+<pre><code class="hljs css language-javascript"><span class="hljs-comment">/**
+ * This imports Bootstrap JS and its css
+ */</span>
+<span class="hljs-keyword">import</span> <span class="hljs-string">'bootstrap'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'bootstrap/dist/css/bootstrap.min.css'</span>;
+
+<span class="hljs-comment">/*
+    you own code go here
+*/</span>
+</code></pre>
+<p>Webpack will include Bootstrap's dependencies <code>Jquery</code> and <code>popper.js</code> in the bundle.</p>
+<h2><a class="anchor" aria-hidden="true" id="sharing-entry-points"></a><a href="#sharing-entry-points" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sharing entry points</h2>
+<p>Obviously, if you follow strictly my proposed structure, you would end up with as many JS files
+as you have pages in your application.</p>
+<p>To avoid this, I usually have a <em>common</em> entry point for all pages that use the same bundle like
+the <code>Bootstrap</code> bundle above.  This is useful when the only thing your page needs is <code>Bootstrap</code>.</p>
+<h2><a class="anchor" aria-hidden="true" id="using-the-bundles-in-laminas-mvc"></a><a href="#using-the-bundles-in-laminas-mvc" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using the bundles in Laminas MVC</h2>
+<p>Laminas Skeleton application expects the <code>public</code> folder to hold all <em>Internet-facing</em> assets.
+Therefore, all the bundles generated by Webpack from the <code>src</code> files should go somewhere under the <code>public</code> folder.
+I personally use a <code>public/dist</code> folder to hold the generated bundles.</p>
+<p>Depending on how you set up Webpack, there will be many bundles generated in your <code>public/dist</code> folder.  You will need
+to make sure that your Laminas view template loads all the scripts of an entry point's bundle which
+can very quickly become complex unless you automate the development process.</p>
+<p>More on this in the <a href="/docs/laminas-webpack-guide-setting-webpack">next page</a> of this guide.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/laminas-webpack-guide-getting-started"><span class="arrow-prev">← </span><span>Getting started</span></a><a class="docs-next button" href="/docs/laminas-webpack-guide-setting-webpack"><span>Setting up the Webpack bundler</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#setting-up-your-laminas-application">Setting up your Laminas application</a></li><li><a href="#setting-up-your-js-files">Setting up your JS files</a></li><li><a href="#sharing-entry-points">Sharing entry points</a></li><li><a href="#using-the-bundles-in-laminas-mvc">Using the bundles in Laminas MVC</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="copyright">Copyright © 2020 VISTO Consulting inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

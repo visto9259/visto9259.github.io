@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Integrating Laminas with Webpack · visto9259</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="## Background"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Integrating Laminas with Webpack · visto9259"/><meta property="og:type" content="website"/><meta property="og:url" content="https://visto9259.github.io/"/><meta property="og:description" content="## Background"/><meta property="og:image" content="https://visto9259.github.io/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://visto9259.github.io/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/img/7890483.jpeg"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"/><link rel="alternate" type="application/atom+xml" href="https://visto9259.github.io/blog/atom.xml" title="visto9259 Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://visto9259.github.io/blog/feed.xml" title="visto9259 Blog RSS Feed"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/7890483.jpeg" alt="visto9259"/><h2 class="headerTitleWithLogo">visto9259</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/php-webpack-plugin" target="_self">Docs</a></li><li class=""><a href="/docs/laminas-webpack-guide-getting-started" target="_self">Guides</a></li><li class=""><a href="/docs/me" target="_self">About</a></li><li class=""><a href="/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/visto9259" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Integrating Laminas with Webpack</h1></header><article><div><span><h2><a class="anchor" aria-hidden="true" id="background"></a><a href="#background" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Background</h2>
+<p>In a typical Laminas MVC application, HTML pages are rendered using views.</p>
+<p>It is also typical to enhance the rendered html using Javascript.  A typical case would be to
+use packages like <a href="https://getbootstrap.com">Bootstrap</a> and <a href="https://jquery.com/">Jquery</a>.</p>
+<p>In a typical Laminas View template, you would include the following to add script loading tags
+to your head section.</p>
+<pre><code class="hljs css language-php"><span class="hljs-meta">&lt;?php</span>
+<span class="hljs-keyword">$this</span>-&gt;headscript()-&gt;appendFile(<span class="hljs-string">"https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"</span>);
+<span class="hljs-keyword">$this</span>-&gt;headscript()-&gt;appendFile(<span class="hljs-string">"https://code.jquery.com/jquery-3.4.1.slim.min.js"</span>);
+<span class="hljs-keyword">$this</span>-&gt;headscript()-&gt;appendFile(<span class="hljs-string">"https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"</span>);
+</code></pre>
+<p>When your application starts to have multiple pages and when you want to have different
+JS scripts for each page, it came become difficult to keep track of which JS packages need to
+be loaded for a given page.</p>
+<ul>
+<li>What scripts should be rendered by the layout template?</li>
+<li>What scripts should be rendered by a page view template?</li>
+<li>Where do you render you own scripts for a give page?</li>
+</ul>
+<p>If you are using a frontend framework like Angular or React, you know that the number of
+individual JS files can increase tremendously.  Most probably, you are also using Webpack and transpiler
+like Babel to compile and manage dependencies.</p>
+<p>I have use (and am still using) RequireJS in the past to manage the dependencies between scripts
+and packages when my scripts were somewhat simple.  Now that I am moving to React JSX, I found that
+the number of scripts is increasing.  In order to automate everyting, I also started using Webpack.</p>
+<h2><a class="anchor" aria-hidden="true" id="setting-up-webpack-and-laminas-mvc"></a><a href="#setting-up-webpack-and-laminas-mvc" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up Webpack and Laminas MVC</h2>
+<p>This is not a guide on setting up a Webpack environment.  I got inspired by this excellent <a href="https://stackoverflow.com/questions/43436754/using-webpack-with-an-existing-php-and-js-project">answer</a>
+on Stackoverflow by <a href="https://github.com/Loilo">Loilo</a>.  Further investigations led me to the
+Webpack plugin <a href="https://github.com/castiron/webpack-php-manifest">castiron/webpack-php-manifest</a>.</p>
+<p>This is not a guide on setting up a Laminas MVC application either.  The Laminas MVC Skeleton is a good place to start
+and this is what I used for my own application.</p>
+<p>So here's a typical Laminas MVC directory structure:</p>
+<pre><code class="hljs">.
++<span class="hljs-comment">--config</span>
+|   +<span class="hljs-comment">--autoload</span>
+|   <span class="hljs-built_in">application</span>.config.php
++<span class="hljs-comment">--data</span>
++<span class="hljs-comment">--module</span>
+|  +<span class="hljs-comment">--Application</span>
+|  |  +<span class="hljs-comment">--config</span>
+|  |  +<span class="hljs-comment">--src</span>
+|  |  +<span class="hljs-comment">--view</span>
+|  +<span class="hljs-comment">--AnotherModule</span>
++<span class="hljs-comment">--public</span>
+   +<span class="hljs-comment">--js</span>
+   +<span class="hljs-comment">--css</span>
+</code></pre>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#background">Background</a></li><li><a href="#setting-up-webpack-and-laminas-mvc">Setting up Webpack and Laminas MVC</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="copyright">Copyright © 2020 VISTO Consulting inc.</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>
